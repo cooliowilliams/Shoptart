@@ -1,0 +1,41 @@
+.checkout-container{
+max-width:900px;
+margin:auto;
+padding:40px;
+}
+
+.shipping-box{
+display:flex;
+flex-direction:column;
+gap:12px;
+margin-bottom:40px;
+}
+
+.shipping-box input{
+padding:10px;
+border:1px solid #ccc;
+border-radius:6px;
+}
+
+.order-summary{
+background:#f9f9f9;
+padding:20px;
+border-radius:10px;
+}
+
+.summary-item{
+display:flex;
+justify-content:space-between;
+margin:10px 0;
+}
+
+.payment-btn{
+margin-top:20px;
+background:red;
+color:white;
+border:none;
+padding:12px;
+border-radius:6px;
+cursor:pointer;
+font-weight:bold;
+}
