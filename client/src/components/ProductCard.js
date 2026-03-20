@@ -17,7 +17,7 @@ function ProductCard({ product }) {
     try {
 
       await axios.post(
-        `http://localhost:5000/api/users/cart/${user.userId}`,
+        `https://shoptart-backend.onrender.com/api/users/cart/${user.userId}`,
         {
           productId: product._id,
           quantity: 1
