@@ -16,7 +16,7 @@ function Cart() {
   useEffect(() => {
     if (user) {
       axios
-        .get(`http://localhost:5000/api/users/cart/${user.userId}`)
+        .get(`https://shoptart-backend.onrender.com/api/users/cart/${user.userId}`)
         .then((res) => setCartItems(res.data))
         .catch((err) => console.log(err));
     }
@@ -38,7 +38,7 @@ function Cart() {
     try {
 
       await axios.patch(
-        `http://localhost:5000/api/users/cart/update/${user.userId}`,
+        `https://shoptart-backend.onrender.com/api/users/cart/update/${user.userId}`,
         {
           productId: item.productId._id,
           quantity: newQuantity
@@ -70,7 +70,7 @@ function Cart() {
     try {
 
       await axios.patch(
-        `http://localhost:5000/api/users/cart/update/${user.userId}`,
+        `https://shoptart-backend.onrender.com/api/users/cart/update/${user.userId}`,
         {
           productId: item.productId._id,
           quantity: newQuantity
