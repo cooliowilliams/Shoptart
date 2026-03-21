@@ -70,20 +70,16 @@ router.post("/login", async (req, res) => {
 
 // ADD TO CART
 router.post("/cart/:userId", async (req, res) => {
-
   try {
-
     const { userId } = req.params;
     const { productId, quantity } = req.body;
 
-    // 1️⃣ Validate inputs
     if (!userId || !productId) {
       return res.status(400).json({
         error: "userId and productId are required"
       });
     }
 
-    // 2️⃣ Find user
     const user = await User.findById(userId);
 
     if (!user) {
@@ -92,40 +88,30 @@ router.post("/cart/:userId", async (req, res) => {
       });
     }
 
-    // 3️⃣ Check if product already in cart
     const existingItem = user.cart.find(
-      item => item.productId.toString() === productId
+      (item) => item.productId.toString() === productId
     );
 
     if (existingItem) {
-
-      // Increase quantity
       existingItem.quantity += quantity || 1;
-
     } else {
-
-      // Add new product
       user.cart.push({
         productId,
         quantity: quantity || 1
       });
-
     }
 
     await user.save();
+    await user.populate("cart.productId");
 
     res.status(200).json(user.cart);
-
   } catch (err) {
-
     console.error("ADD TO CART ERROR:", err);
 
     res.status(500).json({
       error: "Server error"
     });
-
   }
-
 });
 
 // UPDATE CART ITEM
@@ -162,7 +148,14 @@ router.patch("/cart/update/:userId", async (req, res) => {
 router.get("/cart/:userId", async (req, res) => {
   try {
     const user = await User.findById(req.params.userId).populate("cart.productId");
-    res.json(user.cart);
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    const validCart = user.cart.filter((item) => item.productId);
+
+    res.json(validCart);
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
